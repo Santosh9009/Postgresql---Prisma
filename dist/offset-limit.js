@@ -13,11 +13,14 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        const ans = yield prisma.post.findMany({
-            take: 2,
-            skip: 2,
+        yield prisma.user.update({
+            where: {
+                id: 1,
+            },
+            data: {
+                name: {}
+            }
         });
-        console.log(ans);
     });
 }
 main();

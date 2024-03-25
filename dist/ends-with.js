@@ -13,21 +13,26 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield prisma.user.create({
-            data: {
-                email: "Rohan@gmail.com",
-                name: 'Rohan Sinha'
+        const user = yield prisma.user.findMany({
+            where: {
+                email: {
+                    endsWith: '@gmail.com'
+                },
+                posts: {
+                    some: {
+                        published: true
+                    }
+                }
+            },
+            include: {
+                posts: {
+                    where: {
+                        published: false
+                    }
+                }
             }
         });
+        console.log(user);
     });
 }
 main();
-// .then(async () => {
-//   await prisma.$disconnect()
-// })
-// .catch(async (e) => {
-//   console.error(e)
-//   await prisma.$disconnect()
-//   process.exit(1)
-// }
-// )

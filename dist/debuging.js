@@ -1,4 +1,5 @@
 "use strict";
+/// https://github.com/prisma/prisma/issues/5026
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -10,24 +11,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+const prisma = new client_1.PrismaClient({
+    log: [
+        {
+            emit: "event",
+            level: "query",
+        },
+    ],
+});
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield prisma.user.create({
-            data: {
-                email: "Rohan@gmail.com",
-                name: 'Rohan Sinha'
-            }
+        const users = yield prisma.user.findMany({
+            take: 2,
         });
     });
 }
+;
 main();
-// .then(async () => {
-//   await prisma.$disconnect()
-// })
-// .catch(async (e) => {
-//   console.error(e)
-//   await prisma.$disconnect()
-//   process.exit(1)
-// }
-// )
+prisma.$on("query", (e) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(`${e.query} ${e.params}`);
+}));

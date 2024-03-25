@@ -6,12 +6,12 @@ const prisma  = new PrismaClient();
 async function main(){
   await prisma.post.create({
     data:{
-      title:"title3",
-      content: 'Playing gta today',
+      title:"title1",
+      content: 'Ridding a horse',
       published: false,
       author:{
         connect:{
-          id:1
+          id:2
         }
       },
     }
