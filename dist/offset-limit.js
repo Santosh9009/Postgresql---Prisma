@@ -13,18 +13,11 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield prisma.post.create({
-            data: {
-                title: "title3",
-                content: 'Playing gta today',
-                published: false,
-                author: {
-                    connect: {
-                        id: 1
-                    }
-                },
-            }
+        const ans = yield prisma.post.findMany({
+            take: 2,
+            skip: 2,
         });
+        console.log(ans);
     });
 }
 main();

@@ -13,16 +13,16 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield prisma.post.create({
+        yield prisma.user.update({
+            where: {
+                id: 1
+            },
             data: {
-                title: "title3",
-                content: 'Playing gta today',
-                published: false,
-                author: {
-                    connect: {
-                        id: 1
+                posts: {
+                    deleteMany: {
+                        published: false
                     }
-                },
+                }
             }
         });
     });

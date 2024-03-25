@@ -10,21 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+const prisma = new client_1.PrismaClient({ log: ['info', 'query'], });
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield prisma.post.create({
-            data: {
-                title: "title3",
-                content: 'Playing gta today',
-                published: false,
+        const posts = yield prisma.post.findMany({
+            include: {
                 author: {
-                    connect: {
-                        id: 1
+                    select: {
+                        email: true
                     }
-                },
+                }
             }
         });
+        console.log(posts);
     });
 }
 main();
