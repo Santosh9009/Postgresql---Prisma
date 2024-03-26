@@ -2,17 +2,20 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-async function main(){
+interface updatedUser{
+  Name: string
+}
+
+async function main(_id: number, updatedobj: updatedUser){
   await prisma.user.update({
     where:{
-      id:1,
+      id:_id,
     },
     data:{
-      name:{
-      }
+      name:updatedobj.Name,
     }
   })
   
 }
 
-main();
+main(1,{Name:'Robin Uthapa'});
