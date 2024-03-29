@@ -28,3 +28,13 @@ const user : User2 ={name:'santosh',age:3}
 
 user.name = 'harjlsjf'
 // user.age = 34  not possible bcz its readonly 
+
+// exclude 
+type Event1 = 'click' | 'scroll' | 'mousemove';
+type ExcludeEvent = Exclude<Event1, 'scroll'>; // 'click' | 'mousemove'
+
+const handleEvent = (event: ExcludeEvent) => {
+  console.log(`Handling event: ${event}`);
+};
+
+handleEvent('click'); // OK
